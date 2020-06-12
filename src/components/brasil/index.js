@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './App.css';
+import './style.css';
 
 
-export default class App extends Component{
+export default class Brasil extends Component{
   constructor(props){
     super(props)
     this.state = {
@@ -46,7 +46,7 @@ export default class App extends Component{
     })
     .catch((error) => {
 
-      //console.log(error);
+      console.log(error);
     });
   }  
 
@@ -99,13 +99,21 @@ export default class App extends Component{
       deaths, deathsToday, mortality, date, time, waiting
     } = this.state;
 
+    const { __function } = this.props;
+
     return (
       <div className="App">
         <div className="App-container">
 
           <header className={waiting}>
-            <h1>Painel Covid - 19</h1>
-            <p>Coronavírus no Brasil</p>
+            <div>
+              <h1>Painel Covid - 19</h1>
+              <p>Coronavírus no Brasil</p>
+            </div>
+
+            <div className="select">
+              <button>Ver Estados</button>
+            </div>
           </header>
 
           <main className={'cards '+waiting}>
@@ -194,7 +202,7 @@ export default class App extends Component{
           </main>
 
         <footer>
-          <a href="https://github.com/rangel-pci" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/rangel-pci" target="_blank">
             <img alt="Git Hub" src="/assets/github.svg" width="30px" height="30px" />
             <span>Sobre</span>
           </a>

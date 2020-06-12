@@ -1,38 +1,170 @@
-.App {
-  text-align: center;
+body{
+  overflow-x: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App-container{
+  max-width: 90vw;
+  margin: 0 auto;
+
+  position: relative;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+header{
+  margin-top: 60px;
+
+  display: flex;
+  flex-direction: column;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+header h1{
+  font-size: 30px;
+  color: #fff;
+}
+
+header p{
+  font-size: 14px;
+  color: #fff;
+}
+
+.cards{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-gap: 20px;
+
+  margin-bottom: 30px;
+}
+
+.card{
+  max-width: 395px;
+  height: 154px;
+
+  margin-top: 45px;
+  padding: 20px;
+
+  background: #fff;
+
+  border-radius: 10px;
+  box-shadow: 0 3px var(--shadow-color);
+
+  display: flex;
+  align-items: center;
+}
+
+.card .info{
+  margin-left: 30px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.card p, .mini-card p, a{
+  font-size: 28px;
+  color: #4f4f4f;
+
+  font-weight: 600;
+}
+
+.card h2, .mini-card h2{
+  font-size: 14px;
+  color: var(--primary-color);
+
+  font-weight: 500;
+}
+
+.mini-card{
+  margin-top: 10px;
+  max-width: 395px;
+  padding: 20px;
+
+  border-radius: 10px;
+
+
+  background: linear-gradient(to top, #EDEDF6, #fff);
+  -moz-background: linear-gradient(to top, #EDEDF6 1%, #fff);
+  -webkit-background: linear-gradient(to top, #EDEDF6 1%, #fff);
+}
+
+.mini-card .info{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;  
+}
+
+footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 50px;
+}
+
+footer a{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+  text-decoration: none;
 }
 
-.App-link {
-  color: #61dafb;
+footer a span{
+  margin-bottom: 20px;
+  color: #000;
+  font-weight: 300;
+  font-size: 16px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Responsive */
+@media (max-width: 1200px){
+  .cards{
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media (max-width: 900px){
+  .cards{
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
   }
+}
+
+@media (max-width:620px){
+  .cards{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card{
+    padding: 60px;
+    margin-top: 15px;
+    width: 400px;
+  }
+
+  .mini-card{
+    margin-top: 6px;
+  }
+}
+
+/* Waiting API data */
+
+header.waiting::before{
+  top: 0;
+  left: 0;
+}
+
+header.waiting::after{
+  top: 0;
+  right: 0;
+}
+
+main.waiting{
+	opacity: 0;
+}
+
+main{
+	opacity: 1;
+	transition: all 1s;
 }
