@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './App.css';
-
+import './css/App.css';
 
 export default class App extends Component{
   constructor(props){
@@ -22,54 +21,59 @@ export default class App extends Component{
       time: null,
 
       waiting: 'waiting',
+
+      states: [],
+      showStates: 'd-none'
     }
   }
 
   componentDidMount(){
-    this.getData();
+    this.getBrazilData();
+    this.getStatesData();
   }
 
-  //get data from API
-  getData(){
+  //get Brazil data from API
+  getBrazilData = async () => {
     const method = 'GET';
     const url = 'https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalGeralApi';
     const headers = { authority: 'xx9p7hp1p7.execute-api.us-east-1.amazonaws.com' }
 
-    axios({
+    await axios({
       method,
       url,
       headers
     })
     .then((res) => {
 
-      this.setData(res.data);
+      this.setBrazilData(res.data);
     })
     .catch((error) => {
 
       //console.log(error);
     });
-  }  
+  }
 
-  formatDate(dateTime){
-    //convert date from yyyymmddThhmmss to data(dd/mm/yy) and time(hh/mm/ss)
+  //get Brazil States data from API
+  getStatesData = async () => {
+    const method = 'GET';
+    const url = 'https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado';
 
-    const dt = new Date(dateTime);
+    await axios({
+      method,
+      url
+    })
+    .then((res) => {
 
-    const day = dt.getDate() < 10? '0'+dt.getDate(): dt.getDate();
-    const month = (dt.getMonth()+1) < 10? '0'+(dt.getMonth()+1): (dt.getMonth()+1);
-    const year = dt.getFullYear();
-    const hour = dt.getHours();
-    const min = dt.getMinutes();
-    const sec = dt.getSeconds();
+      this.setState({ states: res.data });
+    })
+    .catch((error) => {
 
-    const date = `${day}/${month}/${year}`;
-    const time = `${hour}:${min}:${sec}`;
-
-    return {date, time}
+      //console.log(error);
+    });
   }
 
   //fill the app
-  setData(data){
+  setBrazilData = (data) => {
     const { confirmados, obitos, dt_updated } = data;
 
     const {date, time } = this.formatDate(dt_updated);
@@ -92,11 +96,39 @@ export default class App extends Component{
     });
   }
 
+  showStates = () => {
+    const { showStates } = this.state;
+    if (showStates === 'd-none') {
+      this.setState({ showStates: 'd-display' });
+    }else{
+      this.setState({ showStates: 'd-none' });
+    }
+  }
+
+  formatDate = (dateTime) => {
+    //convert date from yyyymmddThhmmss to date(dd/mm/yy) and time(hh/mm/ss)
+
+    const dt = new Date(dateTime);
+
+    const day = dt.getDate() < 10? '0'+dt.getDate(): dt.getDate();
+    const month = (dt.getMonth()+1) < 10? '0'+(dt.getMonth()+1): (dt.getMonth()+1);
+    const year = dt.getFullYear();
+    const hour = dt.getHours();
+    const min = dt.getMinutes();
+    const sec = dt.getSeconds();
+
+    const date = `${day}/${month}/${year}`;
+    const time = `${hour}:${min}:${sec}`;
+
+    return {date, time}
+  }
+
   render(){
 
     const {
       cases, casesToday, incidence, recovered, followUp,
-      deaths, deathsToday, mortality, date, time, waiting
+      deaths, deathsToday, mortality, date, time,
+      waiting, states, showStates
     } = this.state;
 
     return (
@@ -134,7 +166,7 @@ export default class App extends Component{
               <div className="card">
                 <img src="./assets/death.svg" alt="Mortos" />
                 <div className="info">
-                  <p>{ deaths }</p>
+                  <p style={{ color: '#FF4C61' }} >{ deaths }</p>
                   <h2>Mortos</h2>
                 </div>
               </div>
@@ -154,7 +186,7 @@ export default class App extends Component{
               <div className="card">
                 <img src="./assets/recovery.svg" alt="Recuperados" />
                 <div className="info">
-                  <p>{ recovered }</p>
+                  <p style={{ color: '#33D69F' }} >{ recovered }</p>
                   <h2>Recuperados</h2>
                 </div>
               </div>
@@ -191,10 +223,27 @@ export default class App extends Component{
               </div>
             </div>
 
+            <div className="by-state"><button onClick={this.showStates}>Ver números de cada estado do Brasil</button></div>
+
+            {states.map( (state) => {
+              return(
+                <div className={'card card-state '+showStates} key={state.nome}>
+                  <h3>{state.nome}</h3>
+                  <div className="info">
+                    <p>{Number(state.casosAcumulado).toLocaleString()}</p>
+                    <p>{Number(state.obitosAcumulado).toLocaleString()}</p>
+
+                    <h2>Casos</h2>                
+                    <h2>Mortos</h2>
+                  </div>
+                </div>
+              )
+            })}
+
           </main>
 
         <footer>
-          <a href="https://github.com/rangel-pci" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/rangel-pci/covid19Panel" target="_blank" rel="noopener noreferrer">
             <img alt="Git Hub" src="/assets/github.svg" width="30px" height="30px" />
             <span>Sobre</span>
           </a>

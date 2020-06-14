@@ -3,6 +3,10 @@
   --shadow-color: #EDEDF6;
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
 *{
 	margin: 0;
 	padding: 0;

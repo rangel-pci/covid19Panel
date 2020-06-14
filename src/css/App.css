@@ -72,6 +72,35 @@ header p{
   font-weight: 500;
 }
 
+.card-state{
+  flex-direction: column;
+}
+
+.card-state .info{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1px 20px;
+
+  justify-content: center;
+  text-align: center;
+
+  margin: 0;
+}
+
+.card-state h3{
+  font-size: 28px;
+  color: #6F52ED;
+  text-align: center;
+
+  width: 100%;
+
+  border-bottom: 1px solid #6F52ED;  
+}
+
+.card-state p:nth-child(2){
+  color: #FF4C61;
+}
+
 .mini-card{
   margin-top: 10px;
   max-width: 395px;
@@ -92,12 +121,38 @@ header p{
   justify-content: space-between;  
 }
 
+
+.by-state{
+  grid-column: 1/5;
+
+  margin-top: 10px;
+
+  display: flex;
+  justify-content: center;
+  
+}
+
+.by-state button{
+  font-size: 16px;
+  color: #6F52ED;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #fff;
+  padding: 10px 24px;
+
+  cursor: pointer;
+
+  box-shadow: 1px 1px 1px;
+}
+
 footer{
   display: flex;
   justify-content: center;
   align-items: center;
 
-  margin-top: 50px;
+  margin-top: 10px;
 }
 
 footer a{
@@ -109,10 +164,23 @@ footer a{
 }
 
 footer a span{
-  margin-bottom: 20px;
   color: #000;
   font-weight: 300;
   font-size: 16px;
+}
+
+.d-none{
+  display: none;
+  opacity: 0;
+
+  transition: all 0.5s ease-out;
+}
+
+.display{
+  display: grid;
+  opacity: 1;
+
+  transition: all 0.5s ease-in;
 }
 
 /* Responsive */
@@ -141,6 +209,10 @@ footer a span{
     padding: 60px;
     margin-top: 15px;
     width: 400px;
+  }
+
+  .card-state{
+    padding: 20px;
   }
 
   .mini-card{
