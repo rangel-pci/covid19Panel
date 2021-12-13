@@ -147,6 +147,81 @@ header p{
   box-shadow: 1px 1px 1px;
 }
 
+@keyframes top-to-bottom {
+  0%{
+    top: 0px;
+    opacity: 0;
+  }
+  100% {
+    top: 100px;
+    opacity: 1;
+  }
+}
+
+.api-block-message{
+  background: #4f4f4f;
+  width: 100%;
+  max-width: 520px;
+  border-radius: 3px;
+  padding: 10px 20px;
+
+  text-align: justify;
+
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+
+  z-index: 100;
+
+  animation: top-to-bottom 1s;
+  -webkit-animation: top-to-bottom 1s;
+  -moz-animation: top-to-bottom 1s;
+}
+
+.api-block-message button{
+  background: none;
+  color: #a4f;
+  border: 1px solid #a4f;
+  padding: 10px 10px;
+  border-radius: 2px;
+
+  margin-top: 10px;
+}
+
+.api-block-message button:hover{
+  box-shadow: 2px 2px 15px -5px #a4f;
+  background: #a4f;
+  color: #fff;
+  border-color: transparent;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+@keyframes fade-out {
+  0%{
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    top: -100%;
+  }
+}
+
+.api-block-message.hide{
+  animation: fade-out 2s;
+  -webkit-animation: fade-out 2s;
+  -moz-animation: fade-out 2s;
+
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+}
+
 footer{
   display: flex;
   justify-content: center;
@@ -174,6 +249,20 @@ footer a span{
   opacity: 0;
 
   transition: all 0.5s ease-out;
+}
+
+.d-block{
+  display: block;
+  opacity: 1;
+
+  transition: all 0.5s ease-in; 
+}
+
+.d-flex{
+  display: flex;
+  opacity: 1;
+
+  transition: all 0.5s ease-in; 
 }
 
 .display{

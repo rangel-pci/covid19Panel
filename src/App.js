@@ -23,7 +23,8 @@ export default class App extends Component{
       waiting: 'waiting',
 
       states: [],
-      showStates: 'd-none'
+      showStates: 'd-none',
+      showAPIblockedMessage: 'd-none'
     }
   }
 
@@ -49,7 +50,7 @@ export default class App extends Component{
     })
     .catch((error) => {
 
-      //console.log(error);
+      // console.log(error);
     });
   }
 
@@ -67,7 +68,7 @@ export default class App extends Component{
       this.setState({ states: res.data });
     })
     .catch((error) => {
-
+      this.showApiBlockMessage();
       //console.log(error);
     });
   }
@@ -105,6 +106,14 @@ export default class App extends Component{
     }
   }
 
+  showApiBlockMessage = () => {
+    this.setState({ showAPIblockedMessage: 'd-flex' });
+  }
+
+  hideApiBlockMessage = () => {
+    this.setState({ showAPIblockedMessage: 'hide' });
+  }
+
   formatDate = (dateTime) => {
     //convert date from yyyymmddThhmmss to date(dd/mm/yy) and time(hh/mm/ss)
 
@@ -128,12 +137,19 @@ export default class App extends Component{
     const {
       cases, casesToday, incidence, recovered, followUp,
       deaths, deathsToday, mortality, date, time,
-      waiting, states, showStates
+      waiting, states, showStates, showAPIblockedMessage
     } = this.state;
 
     return (
       <div className="App">
         <div className="App-container">
+
+        <div className={showAPIblockedMessage+' api-block-message'}>
+        <button onClick={this.hideApiBlockMessage}>Fechar</button>
+          <p>A aplicação esteve no ar e funcionando de 12/06/2020 até 10/12/2021, quando o site do Ministério da Saúde sofreu um ataque hacker.
+          <br/>
+          Se você ainda está vendo essa mensagem, é provável que a rota de acesso a API (que antes era pública) mudou ou está bloqueada.</p>
+        </div>
 
           <header className={waiting}>
             <h1>Painel Covid - 19</h1>
